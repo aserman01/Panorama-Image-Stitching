@@ -23,7 +23,9 @@ def ImageStitching(imageL,imageR, outname):
     
     # As we know which image is left and which image is right, we can only scan the right and left part of images
     # by scaning %75 part of an image, program can work in a more optimized manner
-    # My test results showed that scanning only %75 of the images helps us save 2-3 seconds
+    
+    # My test results showed that scanning only %75 of the images helps us save 2-3 seconds and this value
+    # still can increase as we reduce the scan area without losing any details in panorama
     
     # create a mask image filled with zeros, the size of original image
     maskL = np.zeros(imageL.shape[:2], dtype=np.uint8)
