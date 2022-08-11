@@ -207,8 +207,8 @@ image2 = cv2.imread('Problem/test2.jpg')
 '''
 
 output_name = "Panorama_Final"
-image1 = cv2.imread('Problem/oyku1.jpeg')
-image2 = cv2.imread('Problem/oyku2.jpeg')
+image1 = cv2.imread('imageLeft.jpeg')
+image2 = cv2.imread('imageRight.jpeg')
 
 
 ImageStitching(image1,image2, output_name) #(image1, image2, name of the output file)
