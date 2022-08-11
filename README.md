@@ -16,7 +16,7 @@ I implemented a feature matching automatic image stitching algorithm. User input
 ![imageLeft](https://user-images.githubusercontent.com/29065812/184124543-b386111d-9801-4121-8195-89f2008e88c9.jpg)
 ![imageRight](https://user-images.githubusercontent.com/29065812/184124562-12dcfbab-b328-44c7-ae9a-d9c7d2d0332b.jpg)
 
-### First 100 SIFT and kNN Matches
+### SIFT and kNN Matches
 <img width="1440" alt="Screen Shot 2022-08-11 at 11 14 16" src="https://user-images.githubusercontent.com/29065812/184124799-22c4480b-747e-4bc7-b1e0-377e11b66044.png">
 
 ### Weighted Filter
@@ -25,5 +25,5 @@ I implemented a feature matching automatic image stitching algorithm. User input
 
 ### Output
 
-<img width="1440" alt="Screen Shot 2022-08-11 at 11 21 15" src="https://user-images.githubusercontent.com/29065812/184124942-7d52c65d-a21d-472e-8e7f-1629873506d8.png">
+![Panorama_Final](https://user-images.githubusercontent.com/29065812/184125137-977e2810-aa7a-460f-94fa-8d51473fdacb.png)
 
