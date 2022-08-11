@@ -65,7 +65,7 @@ def ImageStitching(imageL,imageR, outname):
     matches = sorted(matches, key = lambda x : x.distance)
 
     # We will only display first 100 matches for simplicity
-    result = cv2.drawMatches(imageL, left_keypoints, imageR, right_keypoints, matches[:18000], grayR, flags = 2)
+    result = cv2.drawMatches(imageL, left_keypoints, imageR, right_keypoints, matches[:100], grayR, flags = 2)
     
     cv2.imshow('SIFT Matches', result)
     
@@ -171,11 +171,13 @@ def ImageStitching(imageL,imageR, outname):
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     
+    '''
     cv2.imshow('Mask_1', mask1)
 
     print("\nMask_1 is ready")
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+    '''
     
     cv2.imshow('Panorama_2', norm_p2)
 
@@ -183,11 +185,13 @@ def ImageStitching(imageL,imageR, outname):
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     
+    '''
     cv2.imshow('Mask_2', mask2)
 
     print("\nMask_2 is ready")
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+    '''
     
     # Get rid of black borders created by perspective differences
     
