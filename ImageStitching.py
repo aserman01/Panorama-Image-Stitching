@@ -8,6 +8,8 @@ Created on Thu Aug 11 08:59:55 2022
 
 import cv2
 import numpy as np
+#import time                # Used for testing
+#start_time = time.time()
 
 
 def ImageStitching(imageL,imageR, outname):
@@ -21,6 +23,8 @@ def ImageStitching(imageL,imageR, outname):
     
     # As we know which image is left and which image is right, we can only scan the right and left part of images
     # by scaning %75 part of an image, program can work in a more optimized manner
+    # My test results showed that scanning only %75 of the images helps us save 2-3 seconds
+    
     # create a mask image filled with zeros, the size of original image
     maskL = np.zeros(imageL.shape[:2], dtype=np.uint8)
     maskR = np.zeros(imageR.shape[:2], dtype=np.uint8)
@@ -69,6 +73,7 @@ def ImageStitching(imageL,imageR, outname):
     
     cv2.imshow('SIFT Matches', result)
     
+    #print("--- %s seconds ---" % (time.time() - start_time)) # Used for testing 
     # Print total number of matching points between the training and query images
     print("\nSIFT Matches are ready. \nNumber of Matching Keypoints: ", len(matches))
     cv2.waitKey(0)
