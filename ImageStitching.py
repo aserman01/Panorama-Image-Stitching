@@ -29,12 +29,12 @@ def ImageStitching(imageL,imageR, outname):
     imageL_h = imageL.shape[0]
     imageR_w = imageR.shape[1]
     imageR_h = imageR.shape[0]
-    # draw your selected ROI on the mask image
+    # draw desired ROI on the mask image
+    #(mask, first position, second position, color, thickness)
     cv2.rectangle(maskL, (int(imageL_w/4),0), (int(imageL_w),int(imageL_h)), (255), thickness = -1)
     cv2.rectangle(maskR, (0,0), (int(3*imageR_w/4),int(imageR_h)), (255), thickness = -1)
     
     # Don't forget to change detectAndCompute mask from None to imageL/R
-    
     '''
     
     
