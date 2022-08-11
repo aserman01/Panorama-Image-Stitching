@@ -11,6 +11,8 @@ I implemented a feature matching automatic image stitching algorithm. User input
 * With homography matrix, we warp the images.
 * Lastly, we use a weighted filter to make transition between both images seamless.
 
+## Sample
+
 ### Input Images
 
 ![imageLeft](https://user-images.githubusercontent.com/29065812/184124543-b386111d-9801-4121-8195-89f2008e88c9.jpg)
