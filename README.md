@@ -19,7 +19,7 @@ I implemented a feature matching automatic image stitching algorithm. User input
 ![imageRight](https://user-images.githubusercontent.com/29065812/184124562-12dcfbab-b328-44c7-ae9a-d9c7d2d0332b.jpg)
 
 ### SIFT and kNN Matches
-<img width="1440" alt="Screen Shot 2022-08-11 at 11 14 16" src="https://user-images.githubusercontent.com/29065812/184124799-22c4480b-747e-4bc7-b1e0-377e11b66044.png">
+<img width="1440" alt="Screen Shot 2022-08-11 at 14 50 16" src="https://user-images.githubusercontent.com/29065812/184138121-c3f30fe9-509e-4854-aa77-33e905dd98a4.png">
 
 ### Weighted Filter
 
