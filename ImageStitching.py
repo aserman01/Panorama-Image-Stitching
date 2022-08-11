@@ -16,6 +16,27 @@ def ImageStitching(imageL,imageR, outname):
     grayL = cv2.cvtColor(imageL, cv2.COLOR_BGR2GRAY)
     grayR = cv2.cvtColor(imageR, cv2.COLOR_BGR2GRAY)
     
+    
+    '''
+    
+    # As we know which image is left and which image is right, we can only scan the right and left part of images
+    # by scaning %75 part of an image, program can work in a more optimized manner
+    # create a mask image filled with zeros, the size of original image
+    maskL = np.zeros(imageL.shape[:2], dtype=np.uint8)
+    maskR = np.zeros(imageR.shape[:2], dtype=np.uint8)
+    
+    imageL_w = imageL.shape[1]
+    imageL_h = imageL.shape[0]
+    imageR_w = imageR.shape[1]
+    imageR_h = imageR.shape[0]
+    # draw your selected ROI on the mask image
+    cv2.rectangle(maskL, (int(imageL_w/4),0), (int(imageL_w),int(imageL_h)), (255), thickness = -1)
+    cv2.rectangle(maskR, (0,0), (int(3*imageR_w/4),int(imageR_h)), (255), thickness = -1)
+    
+    # Don't forget to change detectAndCompute mask from None to imageL/R
+    '''
+    
+    
     # Convert original images into RGB for display
     #imageL = cv2.cvtColor(imageL, cv2.COLOR_BGR2RGB)
     #imageR = cv2.cvtColor(imageR, cv2.COLOR_BGR2RGB)
@@ -23,8 +44,8 @@ def ImageStitching(imageL,imageR, outname):
     # SIFT Keypoint Detection
     sift = cv2.xfeatures2d.SIFT_create()
 
-    left_keypoints, left_descriptor = sift.detectAndCompute(grayL, None)
-    right_keypoints, right_descriptor = sift.detectAndCompute(grayR, None)
+    left_keypoints, left_descriptor = sift.detectAndCompute(grayL, None)   # Change maskL to none if no mask
+    right_keypoints, right_descriptor = sift.detectAndCompute(grayR, None) # Change maskR to None if no mask
     
 
     print("Number of Keypoints Detected In The Left Image: ", len(left_keypoints))
@@ -43,7 +64,7 @@ def ImageStitching(imageL,imageR, outname):
     matches = sorted(matches, key = lambda x : x.distance)
 
     # We will only display first 100 matches for simplicity
-    result = cv2.drawMatches(imageL, left_keypoints, imageR, right_keypoints, matches[:100], grayR, flags = 2)
+    result = cv2.drawMatches(imageL, left_keypoints, imageR, right_keypoints, matches[:18000], grayR, flags = 2)
     
     cv2.imshow('SIFT Matches', result)
     
@@ -207,8 +228,8 @@ image2 = cv2.imread('Problem/test2.jpg')
 '''
 
 output_name = "Panorama_Final"
-image1 = cv2.imread('imageLeft.jpeg')
-image2 = cv2.imread('imageRight.jpeg')
+image1 = cv2.imread('Problem/imageLeft.jpg')
+image2 = cv2.imread('Problem/imageRight.jpg')
 
 
 ImageStitching(image1,image2, output_name) #(image1, image2, name of the output file)
