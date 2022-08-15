@@ -27,6 +27,10 @@ def ImageStitching(imageL,imageR, outname):
     # My test results showed that scanning only %75 of the images helps us save 2-3 seconds and this value
     # still can increase as we reduce the scan area without losing any details in panorama
     
+    #Input desired percentage to be scanned
+    percentage = 75
+    alt_percentage = 100-percentage
+    
     # create a mask image filled with zeros, the size of original image
     maskL = np.zeros(imageL.shape[:2], dtype=np.uint8)
     maskR = np.zeros(imageR.shape[:2], dtype=np.uint8)
@@ -37,8 +41,8 @@ def ImageStitching(imageL,imageR, outname):
     imageR_h = imageR.shape[0]
     # draw desired ROI on the mask image
     #(mask, first position, second position, color, thickness)
-    cv2.rectangle(maskL, (int(imageL_w/4),0), (int(imageL_w),int(imageL_h)), (255), thickness = -1)
-    cv2.rectangle(maskR, (0,0), (int(3*imageR_w/4),int(imageR_h)), (255), thickness = -1)
+    cv2.rectangle(maskL, (int(imageL_w*alt_percentage/100),0), (int(imageL_w),int(imageL_h)), (255), thickness = -1)
+    cv2.rectangle(maskR, (0,0), (int(percentage*imageR_w/100),int(imageR_h)), (255), thickness = -1)
     
     # Don't forget to change detectAndCompute mask from None to imageL/R
     '''
