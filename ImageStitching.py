@@ -206,7 +206,7 @@ def ImageStitching(imageL,imageR, outname):
     
     # Get rid of black borders created by perspective differences
     
-    rows, cols = np.where(result[:, :, 0] != 0) # Check if a pixel is pure black or not (0-255)
+    rows, cols = np.where(result[:, :, 0] != 0) # Check if a pixel is pure black or not (0-255) and get the ones that are not black as rows and cols
     min_row, max_row = min(rows), max(rows) + 1
     min_col, max_col = min(cols), max(cols) + 1
     final_result = result[min_row:max_row, min_col:max_col, :] # Resize image without black borders
@@ -222,7 +222,7 @@ def ImageStitching(imageL,imageR, outname):
     print("\nFinal Panorama is created with the name "+outname+".png")
     cv2.waitKey(0)
     
-    # A simple code to fix a bug preventing last image window to close
+    # A simple code to fix a bug preventing the last image window to close
     cv2.waitKey(1)
     cv2.destroyAllWindows()
     for i in range (1,5):
