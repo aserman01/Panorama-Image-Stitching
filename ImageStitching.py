@@ -44,7 +44,7 @@ def ImageStitching(imageL,imageR, outname):
     cv2.rectangle(maskL, (int(imageL_w*alt_percentage/100),0), (int(imageL_w),int(imageL_h)), (255), thickness = -1)
     cv2.rectangle(maskR, (0,0), (int(percentage*imageR_w/100),int(imageR_h)), (255), thickness = -1)
     
-    # Don't forget to change detectAndCompute mask from None to imageL/R
+    # Don't forget to change detectAndCompute mask from None to maskL/R
     '''
     
     
