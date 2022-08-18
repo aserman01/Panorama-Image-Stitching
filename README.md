@@ -11,6 +11,25 @@ I implemented a feature matching automatic image stitching algorithm. User input
 * With homography matrix, we warp the images.
 * Lastly, we use a weighted filter to make transition between both images seamless.
 
+## Optimization
+For a better optimization, I tried two different methods.
+
+### Rectangle Masking with Percentage
+As we know which image is left and which image is right, we can only scan the right and left part of images by scaning %75 part of an image, program can work in a more optimized manner.
+
+My test results showed that scanning only %75 of the images helps us save 2-3 seconds for each stitching and this value still can increase as we reduce the scan area without losing any details in panorama.
+
+<img width="1085" alt="Screen Shot 2022-08-18 at 11 00 38" src="https://user-images.githubusercontent.com/29065812/185342549-9692d38f-49fd-4a01-a5de-919c9d971dbf.png">
+
+
+### Bucketing
+We can seperate our image into little rectangles and can only take some of those rectangles to save computing time. As these rectangles are homogenously disturbed through our image, precision of the stitching doesn't change.
+
+My test results showed that using 50x50 mask of the images helps us save 5-6 seconds (which is very drastic) for each stitching and this value still can increase as we reduce the scan area without losing any details in panorama.
+
+<img width="1440" alt="Screen Shot 2022-08-18 at 10 54 02" src="https://user-images.githubusercontent.com/29065812/185341958-dee09f41-171a-4791-b222-210c4cf91303.png">
+
+
 ## Sample
 
 ### Input Images
