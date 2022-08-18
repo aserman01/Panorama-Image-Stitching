@@ -8,8 +8,8 @@ Created on Thu Aug 11 08:59:55 2022
 
 import cv2
 import numpy as np
-#import time                # Used for testing
-#start_time = time.time()
+import time                # Used for testing
+start_time = time.time()
 
 
 def ImageStitching(imageL,imageR, outname):
@@ -43,7 +43,7 @@ def ImageStitching(imageL,imageR, outname):
     # still can increase as we reduce the scan area without losing any details in panorama
     
     #Input desired percentage to be scanned
-    percentage = 25
+    percentage = 75
     alt_percentage = 100-percentage
     
     
@@ -53,7 +53,7 @@ def ImageStitching(imageL,imageR, outname):
     cv2.rectangle(maskR, (0,0), (int(percentage*imageR_w/100),int(imageR_h)), (255), thickness = -1)
     '''
     
-
+    
     # Bucketing
     
     # We can seperate our image into little rectangles and can only take some of those rectangles to save computing time. 
@@ -63,18 +63,32 @@ def ImageStitching(imageL,imageR, outname):
     # My test results showed that using 50x50 mask of the images helps us save 5-6 seconds (which is very drastic) for 
     # each stitching and this value still can increase as we reduce the scan area without losing any details in panoram
     
-    for col in range(0, imageL_h, 100): # 0, 100, 200, ...
-        for row in range(0, imageL_w, 100): 
-            cv2.rectangle(maskLT, (row,col), (row+50,col+50), (255), thickness = -1)
-            maskL += maskLT
-            #cv2.imshow('maskL', maskL)
-    
-    for col in range(0, imageR_h, 100): # 0, 100, 200, ...
+    flagl= 0
+    flagr = 0
+    for col in range(0, imageL_h, 50): # 0, 100, 200, ...
+        for row in range(0, imageL_w, 100):
+            if flagl%2 == 0:
+                cv2.rectangle(maskLT, (row,col), (row+50,col+50), (255), thickness = -1)
+                maskL += maskLT
+            else:
+                cv2.rectangle(maskLT, (row+50,col), (row+100,col+50), (255), thickness = -1)
+                maskL += maskLT
+        flagl += 1
+        
+        
+    for col in range(0, imageR_h, 50): # 0, 100, 200, ...
         for row in range(0, imageR_w, 100): 
-            cv2.rectangle(maskRT, (row,col), (row+50,col+50), (255), thickness = -1)
-            maskR += maskRT
-            #cv2.imshow('maskR', maskR)
-
+            if flagr%2 == 0:
+                cv2.rectangle(maskRT, (row,col), (row+50,col+50), (255), thickness = -1)
+                maskR += maskRT
+            else:
+                cv2.rectangle(maskRT, (row+50,col), (row+100,col+50), (255), thickness = -1)
+                maskR += maskRT
+        flagr += 1
+       
+    
+    #cv2.imshow('maskR', maskR)
+    #cv2.imshow('maskL', maskL)
 
     
     # Don't forget to change detectAndCompute mask from None to maskL/R
@@ -112,7 +126,7 @@ def ImageStitching(imageL,imageR, outname):
     
     cv2.imshow('SIFT Matches', result)
     
-    #print("--- %s seconds ---" % (time.time() - start_time)) # Used for testing 
+    print("--- %s seconds ---" % (time.time() - start_time)) # Used for testing 
     # Print total number of matching points between the training and query images
     print("\nSIFT Matches are ready. \nNumber of Matching Keypoints: ", len(matches))
     cv2.waitKey(0)
