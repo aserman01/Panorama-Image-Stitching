@@ -8,8 +8,8 @@ Created on Thu Aug 11 08:59:55 2022
 
 import cv2
 import numpy as np
-import time                # Used for testing
-start_time = time.time()
+#import time                # Used for testing
+#start_time = time.time()
 
 
 def ImageStitching(imageL,imageR, outname):
@@ -126,7 +126,7 @@ def ImageStitching(imageL,imageR, outname):
     
     cv2.imshow('SIFT Matches', result)
     
-    print("--- %s seconds ---" % (time.time() - start_time)) # Used for testing 
+    #print("--- %s seconds ---" % (time.time() - start_time)) # Used for testing 
     # Print total number of matching points between the training and query images
     print("\nSIFT Matches are ready. \nNumber of Matching Keypoints: ", len(matches))
     cv2.waitKey(0)
