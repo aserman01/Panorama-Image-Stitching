@@ -35,8 +35,9 @@ def ImageStitching(imageL,imageR, outname):
     '''
     # Rectangle Masking with Percentage
     
-    # As we know which image is left and which image is right, we can only scan the right and left part of images
-    # by scaning %75 part of an image, program can work in a more optimized manner
+    # As we know which image is left and which image is right, we can only scan the right and left 
+    # part of images by scaning %75 part of an image, program can work in a more optimized manner.
+
     
     # My test results showed that scanning only %75 of the images helps us save 2-3 seconds and this value
     # still can increase as we reduce the scan area without losing any details in panorama
@@ -55,11 +56,12 @@ def ImageStitching(imageL,imageR, outname):
 
     # Bucketing
     
-    # We can only take little parts of the images and use those parts to get needed keypoints
+    # We can seperate our image into little rectangles and can only take some of those rectangles to save computing time. 
+    # As these rectangles are homogenously disturbed through our image, precision of the stitching doesn't change.
     
     
-    # My test results showed that scanning only %75 of the images helps us save 4-5 seconds and this value
-    # still can increase as we reduce the scan area without losing any details in panorama
+    # My test results showed that using 50x50 mask of the images helps us save 5-6 seconds (which is very drastic) for 
+    # each stitching and this value still can increase as we reduce the scan area without losing any details in panoram
     
     for col in range(0, imageL_h, 100): # 0, 100, 200, ...
         for row in range(0, imageL_w, 100): 
