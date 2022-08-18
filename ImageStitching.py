@@ -19,7 +19,21 @@ def ImageStitching(imageL,imageR, outname):
     grayR = cv2.cvtColor(imageR, cv2.COLOR_BGR2GRAY)
     
     
+    ## OPTIMIZATION METHODS ##
+
+    # create a mask image filled with zeros, the size of original image
+    maskL = np.zeros(imageL.shape[:2], dtype=np.uint8)
+    maskLT = np.zeros(imageL.shape[:2], dtype=np.uint8)
+    maskR = np.zeros(imageR.shape[:2], dtype=np.uint8)
+    maskRT = np.zeros(imageR.shape[:2], dtype=np.uint8)
+    
+    imageL_w = imageL.shape[1]
+    imageL_h = imageL.shape[0]
+    imageR_w = imageR.shape[1]
+    imageR_h = imageR.shape[0]
+    
     '''
+    # Rectangle Masking with Percentage
     
     # As we know which image is left and which image is right, we can only scan the right and left part of images
     # by scaning %75 part of an image, program can work in a more optimized manner
@@ -28,24 +42,41 @@ def ImageStitching(imageL,imageR, outname):
     # still can increase as we reduce the scan area without losing any details in panorama
     
     #Input desired percentage to be scanned
-    percentage = 75
+    percentage = 25
     alt_percentage = 100-percentage
     
-    # create a mask image filled with zeros, the size of original image
-    maskL = np.zeros(imageL.shape[:2], dtype=np.uint8)
-    maskR = np.zeros(imageR.shape[:2], dtype=np.uint8)
     
-    imageL_w = imageL.shape[1]
-    imageL_h = imageL.shape[0]
-    imageR_w = imageR.shape[1]
-    imageR_h = imageR.shape[0]
     # draw desired ROI on the mask image
-    #(mask, first position, second position, color, thickness)
+    # (mask, first position, second position, color, thickness)
     cv2.rectangle(maskL, (int(imageL_w*alt_percentage/100),0), (int(imageL_w),int(imageL_h)), (255), thickness = -1)
     cv2.rectangle(maskR, (0,0), (int(percentage*imageR_w/100),int(imageR_h)), (255), thickness = -1)
+    '''
+    
+
+    # Bucketing
+    
+    # We can only take little parts of the images and use those parts to get needed keypoints
+    
+    
+    # My test results showed that scanning only %75 of the images helps us save 4-5 seconds and this value
+    # still can increase as we reduce the scan area without losing any details in panorama
+    
+    for col in range(0, imageL_h, 100): # 0, 100, 200, ...
+        for row in range(0, imageL_w, 100): 
+            cv2.rectangle(maskLT, (row,col), (row+50,col+50), (255), thickness = -1)
+            maskL += maskLT
+            #cv2.imshow('maskL', maskL)
+    
+    for col in range(0, imageR_h, 100): # 0, 100, 200, ...
+        for row in range(0, imageR_w, 100): 
+            cv2.rectangle(maskRT, (row,col), (row+50,col+50), (255), thickness = -1)
+            maskR += maskRT
+            #cv2.imshow('maskR', maskR)
+
+
     
     # Don't forget to change detectAndCompute mask from None to maskL/R
-    '''
+    
     
     
     # Convert original images into RGB for display
@@ -55,8 +86,8 @@ def ImageStitching(imageL,imageR, outname):
     # SIFT Keypoint Detection
     sift = cv2.xfeatures2d.SIFT_create()
 
-    left_keypoints, left_descriptor = sift.detectAndCompute(grayL, None)   # Change maskL to none if no mask
-    right_keypoints, right_descriptor = sift.detectAndCompute(grayR, None) # Change maskR to None if no mask
+    left_keypoints, left_descriptor = sift.detectAndCompute(grayL, maskL)   # Change maskL to none if no mask
+    right_keypoints, right_descriptor = sift.detectAndCompute(grayR, maskR) # Change maskR to None if no mask
     
 
     print("Number of Keypoints Detected In The Left Image: ", len(left_keypoints))
@@ -244,8 +275,8 @@ image2 = cv2.imread('Problem/test2.jpg')
 '''
 
 output_name = "Panorama_Final"
-image1 = cv2.imread('imageLeft.jpg')
-image2 = cv2.imread('imageRight.jpg')
+image1 = cv2.imread('Problem/imageLeft.jpg')
+image2 = cv2.imread('Problem/imageRight.jpg')
 
 
 ImageStitching(image1,image2, output_name) #(image1, image2, name of the output file)
