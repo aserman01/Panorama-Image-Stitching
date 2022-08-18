@@ -22,12 +22,13 @@ My test results showed that scanning only %75 of the images helps us save 2-3 se
 <img width="1085" alt="Screen Shot 2022-08-18 at 11 00 38" src="https://user-images.githubusercontent.com/29065812/185342549-9692d38f-49fd-4a01-a5de-919c9d971dbf.png">
 
 
-### Bucketization
+### Bucketing
 We can seperate our image into little rectangles and can only take some of those rectangles to save computing time. As these rectangles are homogenously disturbed through our image, precision of the stitching doesn't change.
 
-My test results showed that using 50x50 mask of the images helps us save 5-6 seconds (which is very drastic) for each stitching and this value still can increase as we reduce the scan area without losing any details in panorama.
+My test results showed that using 50x50 mask of the images helps us save 4-5 seconds (which is very drastic) for each stitching and this value still can increase as we reduce the scan area without losing any details in panorama.
 
-<img width="1440" alt="Screen Shot 2022-08-18 at 10 54 02" src="https://user-images.githubusercontent.com/29065812/185341958-dee09f41-171a-4791-b222-210c4cf91303.png">
+
+<img width="1440" alt="Screen Shot 2022-08-18 at 11 34 24" src="https://user-images.githubusercontent.com/29065812/185352395-299a6a63-05bb-438c-9e2a-d67a39a430d5.png">
 
 
 ## Sample
