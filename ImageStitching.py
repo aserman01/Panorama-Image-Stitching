@@ -8,8 +8,8 @@ Created on Thu Aug 11 08:59:55 2022
 
 import cv2
 import numpy as np
-import time                # Used for testing
-start_time = time.time()
+#import time                # Used for testing
+#start_time = time.time()
 
 
 def ImageStitching(imageL,imageR, outname):
@@ -60,14 +60,14 @@ def ImageStitching(imageL,imageR, outname):
     # As these rectangles are homogenously disturbed through our image, precision of the stitching doesn't change.
     
     
-    # My test results showed that using 50x50 mask of the images helps us save 5-6 seconds (which is very drastic) for 
+    # My test results showed that using 50x50 mask of the images helps us save 4-5 seconds (which is very drastic) for 
     # each stitching and this value still can increase as we reduce the scan area without losing any details in panoram
     
     flagl= 0
     flagr = 0
     
     # I have decided to combine both methods of bucketing and masking with percentage to optimize the program
-    # even more. 
+    # even more. I have seen a 5-6 seconds time save with both optimization tecniques implemented.
     
     #Input desired percentage to be scanned
     percentage = 75
@@ -134,7 +134,7 @@ def ImageStitching(imageL,imageR, outname):
     
     cv2.imshow('SIFT Matches', result)
     
-    print("--- %s seconds ---" % (time.time() - start_time)) # Used for testing 
+    #print("--- %s seconds ---" % (time.time() - start_time)) # Used for testing 
     # Print total number of matching points between the training and query images
     print("\nSIFT Matches are ready. \nNumber of Matching Keypoints: ", len(matches))
     cv2.waitKey(0)
@@ -162,6 +162,7 @@ def ImageStitching(imageL,imageR, outname):
     cv2.destroyAllWindows()
     
     # Calculating Homography using good matches and RANSAC
+    
     # I have selected ratio, min_match and RANSAC values according to a study by Caparas, Fajardo and Medina
     # said paper: https://www.warse.org/IJATCSE/static/pdf/file/ijatcse18911sl2020.pdf
     
