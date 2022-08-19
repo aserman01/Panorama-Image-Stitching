@@ -8,8 +8,8 @@ Created on Thu Aug 11 08:59:55 2022
 
 import cv2
 import numpy as np
-#import time                # Used for testing
-#start_time = time.time()
+import time                # Used for testing
+start_time = time.time()
 
 
 def ImageStitching(imageL,imageR, outname):
@@ -65,8 +65,16 @@ def ImageStitching(imageL,imageR, outname):
     
     flagl= 0
     flagr = 0
+    
+    # I have decided to combine both methods of bucketing and masking with percentage to optimize the program
+    # even more. 
+    
+    #Input desired percentage to be scanned
+    percentage = 75
+    alt_percentage = 100-percentage
+    
     for col in range(0, imageL_h, 50): # 0, 100, 200, ...
-        for row in range(0, imageL_w, 100):
+        for row in range(int(imageL_w*alt_percentage/100), imageL_w, 100):
             if flagl%2 == 0:
                 cv2.rectangle(maskLT, (row,col), (row+50,col+50), (255), thickness = -1)
                 maskL += maskLT
@@ -77,7 +85,7 @@ def ImageStitching(imageL,imageR, outname):
         
         
     for col in range(0, imageR_h, 50): # 0, 100, 200, ...
-        for row in range(0, imageR_w, 100): 
+        for row in range(0, int(imageR_w*percentage/100), 100): 
             if flagr%2 == 0:
                 cv2.rectangle(maskRT, (row,col), (row+50,col+50), (255), thickness = -1)
                 maskR += maskRT
@@ -87,8 +95,8 @@ def ImageStitching(imageL,imageR, outname):
         flagr += 1
        
     
-    #cv2.imshow('maskR', maskR)
-    #cv2.imshow('maskL', maskL)
+    cv2.imshow('maskR', maskR)
+    cv2.imshow('maskL', maskL)
 
     
     # Don't forget to change detectAndCompute mask from None to maskL/R
@@ -126,7 +134,7 @@ def ImageStitching(imageL,imageR, outname):
     
     cv2.imshow('SIFT Matches', result)
     
-    #print("--- %s seconds ---" % (time.time() - start_time)) # Used for testing 
+    print("--- %s seconds ---" % (time.time() - start_time)) # Used for testing 
     # Print total number of matching points between the training and query images
     print("\nSIFT Matches are ready. \nNumber of Matching Keypoints: ", len(matches))
     cv2.waitKey(0)
