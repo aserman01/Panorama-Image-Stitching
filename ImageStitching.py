@@ -95,8 +95,8 @@ def ImageStitching(imageL,imageR, outname):
         flagr += 1
        
     
-    cv2.imshow('maskR', maskR)
-    cv2.imshow('maskL', maskL)
+    #cv2.imshow('maskR', maskR)
+    #cv2.imshow('maskL', maskL)
 
     
     # Don't forget to change detectAndCompute mask from None to maskL/R
