@@ -67,13 +67,13 @@ def ImageStitching(imageL,imageR, outname):
     flagr = 0
     
     # I have decided to combine both methods of bucketing and masking with percentage to optimize the program
-    # even more. I have seen a 5-6 seconds time save with both optimization tecniques implemented.
+    # even more. I have seen a 5-6 seconds time save with both optimization tecniques implemented at the same time.
     
     #Input desired percentage to be scanned
-    percentage = 75
+    percentage = 80
     alt_percentage = 100-percentage
     
-    for col in range(0, imageL_h, 50): # 0, 100, 200, ...
+    for col in range(0, imageL_h, 50): # 0, 50, 100, ...
         for row in range(int(imageL_w*alt_percentage/100), imageL_w, 100):
             if flagl%2 == 0:
                 cv2.rectangle(maskLT, (row,col), (row+50,col+50), (255), thickness = -1)
@@ -84,7 +84,7 @@ def ImageStitching(imageL,imageR, outname):
         flagl += 1
         
         
-    for col in range(0, imageR_h, 50): # 0, 100, 200, ...
+    for col in range(0, imageR_h, 50): # 0, 50, 100, ...
         for row in range(0, int(imageR_w*percentage/100), 100): 
             if flagr%2 == 0:
                 cv2.rectangle(maskRT, (row,col), (row+50,col+50), (255), thickness = -1)
@@ -226,7 +226,7 @@ def ImageStitching(imageL,imageR, outname):
     result=panorama1+panorama2 #We combine both of them to have our result
 
 
-    #Normalize panoramas for display
+    #Normalize panoramas for display with imshow command
     norm_p1 = cv2.normalize(panorama1, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
     norm_p2 = cv2.normalize(panorama2, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
 
@@ -260,10 +260,10 @@ def ImageStitching(imageL,imageR, outname):
     cv2.destroyAllWindows()
     '''
     
-    # Get rid of black borders created by perspective differences
+    # Get rid of black borders created by perspective differences and unused space
     
-    rows, cols = np.where(result[:, :, 0] != 0) # Check if a pixel is pure black or not (0-255) and get the ones that are not black as rows and cols
-    min_row, max_row = min(rows), max(rows) + 1
+    rows, cols = np.where(result[:, :, 0] != 0) # Check if a pixel is pure black or not (0-255) and get the ones 
+    min_row, max_row = min(rows), max(rows) + 1 # that are not black as rows and cols
     min_col, max_col = min(cols), max(cols) + 1
     final_result = result[min_row:max_row, min_col:max_col, :] # Resize image without black borders
 
